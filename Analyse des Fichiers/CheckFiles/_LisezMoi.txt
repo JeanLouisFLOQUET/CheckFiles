@@ -1,0 +1,18 @@
+Outil de contrôle des fichiers par leur signature MD5
+
+================================================================================
+MD5
+================================================================================
+Le calcul des signatures MD5 est entièrement basé sur les codes sources du
+projet Polar SSL (https://polarssl.org/). La fonction principale 'md5_file' a
+été adaptée pour retourner une chaîne hexadécimale 128 bits (32 caractères)
+
+Les codes sources ont ensuite été compilé avec MinGW
+
+Script de compilation : _makefile_DLL_MinGW.bat
+
+================================================================================
+Application
+================================================================================
+Code source : CheckFiles.au3
+Compilateur : AutoIt 3.3.8.1
