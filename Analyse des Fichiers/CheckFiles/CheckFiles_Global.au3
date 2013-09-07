@@ -15,9 +15,11 @@ Opt("TrayMenuMode"   ,1)
 Opt("TrayOnEventMode",1)
 
 Global Const $REG_PATH              = "HKEY_CURRENT_USER\Software\JLF\CheckFiles"            ;Endroit de sauvegarde des paramètres
+Global Const $DLL_SHA1              = "901146B9B35EE8F7A66BE770E310AEBBD5E4C973"             ;Code SHA1 de la DLL (calculé par les API de Windows, moins fiable que PolarSSL)
 ;============================================================================================;
 ;Fenêtre principale                                                                          ;
 ;============================================================================================;
+Global Const $GUI_TITLE             = "JLF CheckFiles"                                       ;Titre de l'application
 Global       $hnd_gui_main                                                                   ;Handle sur la fenêtre
 Global       $hnd_path_txt                                                                   ;Handle sur le chemin (texte)
 Global       $hnd_path_btn                                                                   ;Handle sur le bouton 'chemin'
@@ -107,6 +109,7 @@ Global       $req_stop              = 0                                         
 Global       $hash_list[1]                                                                   ;
 Global       $timer
 
+#include <checksums.au3>
 #include <CheckFiles_AnalyseFiles.au3>
 #include <CheckFiles_AnalyseFiles_Mode_2_Liste.au3>
 #include <CheckFiles_AnalyseFiles_Mode_3_Suppr.au3>

@@ -22,7 +22,14 @@ Func _CheckFiles_GUI($path,$mode,$fp)
 	;----------------------------------------------------------------------------------------------
 	;GUI - Partie 1
 	;----------------------------------------------------------------------------------------------
-	$hnd_gui_main = GUICreate("JLF CheckFiles - " & FileGetVersion(@AutoItExe),$GUI_WIDTH,$GUI_HEIGHT,-1,-1,$WS_MINIMIZEBOX + $WS_CAPTION)
+	Local $title
+	If @Compiled Then
+		$title = $GUI_TITLE & " - " & FileGetVersion(@AutoItExe)
+	Else
+		$title = $GUI_TITLE & " - AutoIt version = " & FileGetVersion(@AutoItExe)
+	EndIf
+
+	$hnd_gui_main = GUICreate($title,$GUI_WIDTH,$GUI_HEIGHT,-1,-1,$WS_MINIMIZEBOX + $WS_CAPTION)
 	GUISetIcon(@ScriptFullPath,-1,$hnd_gui_main)
 
 	;----------------------------------------------------------------------------------------------

@@ -15,6 +15,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 Func _CheckFiles_AnalyseFiles_Mode_5_Verifie($path)
+	;Détermine le fichier de la database
 	Local Const $DB_FILENAME = $path & "\" & $DB_LOCAL_NAME
 	If FileExists($DB_FILENAME)=0 Then Return
 
@@ -30,7 +31,7 @@ Func _CheckFiles_AnalyseFiles_Mode_5_Verifie($path)
 
 		;Récupère le nom du fichier référencé
 		$filename = $path & "\" & _CheckFiles_Hash_FromIndex_GetFileName($i)
-		 _CheckFiles_Tip_Update($filename)
+		_CheckFiles_Tip_Update("[dossier : " & $DirIndex & "/" & $TotDir[0] & "] [fichier : " & $i & "] : " & $filename)
 
 		;Le fichier référencé n'existe pas
 		If FileExists($filename)=0 Then
