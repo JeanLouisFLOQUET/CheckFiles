@@ -57,7 +57,11 @@ Func _CheckFiles_AnalyseFiles_Mode_4_Ajout($path)
 			$result = DllCall($dll_hnd,"int:cdecl",$dll_function,"str",$filename,"str","xxx")                                    ;Appelle la DLL pour calculer l'empreinte
 			$error  = @error
 			If $error Then
+				If $error=1 Then MsgBox($MB_ICONASTERISK,"CheckFiles","DllCall error code=1 (impossible d'utiliser la DLL => vérifier que EXE et DLL soit en x86 !!)")
+				If $error=2 Then MsgBox($MB_ICONASTERISK,"CheckFiles","DllCall error code=2 (type retourné inconnu)")
 				If $error=3 Then MsgBox($MB_ICONASTERISK,"CheckFiles","DllCall error code=3 (fonction non trouvée dans la DLL)")
+				If $error=4 Then MsgBox($MB_ICONASTERISK,"CheckFiles","DllCall error code=4 (mauvais nombre de paramètres)")
+				If $error=4 Then MsgBox($MB_ICONASTERISK,"CheckFiles","DllCall error code=5 (mauvais paramètre)")
 				ContinueLoop                                                                                                     ;En cas d'erreur -> passe au fichier suivant
 			EndIf
 			$fp_comptd = $result[2]                                                                                              ;Extrait l'empreinte du tableau renvoyé

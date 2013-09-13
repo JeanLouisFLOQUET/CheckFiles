@@ -2,9 +2,10 @@
 #AutoIt3Wrapper_Version=beta
 #AutoIt3Wrapper_Icon=shell32 145.ico
 #AutoIt3Wrapper_Compression=4
+#AutoIt3Wrapper_UseX64=n
 #AutoIt3Wrapper_Res_Description=JLF CheckFiles
-#AutoIt3Wrapper_Res_Fileversion=3.3.1.71
-#AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
+#AutoIt3Wrapper_Res_Fileversion=3.3.2.71
+#AutoIt3Wrapper_Res_Fileversion_AutoIncrement=p
 #AutoIt3Wrapper_Res_LegalCopyright=Jean-Louis FLOQUET
 #AutoIt3Wrapper_Res_Language=1036
 #AutoIt3Wrapper_Run_Before=_1_makefile_DLL_MinGW.bat
@@ -15,7 +16,7 @@
 ; Titre       : JLF CheckFiles
 ; Fichier     : CheckFiles.au3
 ; Création    : 14 avril 2013
-; Mise à jour : 2013/08/25 22:37
+; Mise à jour : 2013/09/11 10:08
 ; Dépendance  : Aucune
 ;#######################################################################################################################
 ; Description  #
@@ -60,7 +61,8 @@
 ; Suivi de version              #
 ;################################
 ;   Rev.   |    Date    | Description
-;  3.03.01 | 2013/09/08 | 1) New : Vérification de l'empreinte de la DLL
+;  3.03.02 | 2013/09/08 | 1) New : Vérification de l'empreinte de la DLL
+;          |            | 2) Fix : Vérification que l'exécutable est bien 32bits (mode x64 non supporté)
 ;          |            |
 ;  3.02.03 | 2013/08/20 | 1) New : Messages après installation/désinstallation
 ;          |            | 2) Fix : Journalalisation des fichiers non trouvés
@@ -92,8 +94,13 @@
 ;#######################################################################################################################
 #include <CheckFiles_Global.au3>
 
-If _SHA1ForFile("CheckFiles_x86.dll")<>$DLL_SHA1 Then
-	MsgBox($MB_ICONEXCLAMATION,$GUI_TITLE,"La DLL attendue n'a pas été trouvée et a été automatiquement installée/restaurée")
+If StringInStr(@AutoItExe,"x64") Then
+	MsgBox($MB_ICONHAND,$GUI_TITLE,"Application non compatible x64 !")
+	Exit
+EndIf
+
+If _SHA1ForFile(@ScriptDir & "\CheckFiles_x86.dll")<>$DLL_SHA1 Then
+	MsgBox($MB_ICONEXCLAMATION,$GUI_TITLE,"Installation de la DLL...",10)
 	FileInstall("CheckFiles_x86.dll",@ScriptDir & "\CheckFiles_x86.dll",1) ;1=écrase le fichier
 EndIf
 
