@@ -32,7 +32,7 @@ Func _CheckFiles_AnalyseFiles_Mode_3_Suppr($path)
 
 			;Journalise cet évènement
 			$empreinte = _CheckFiles_Hash_FromIndex_GetEmpreinte($i)
-			FileWriteLine($log,_CheckFiles_Heure() & " - file not found : (" & $empreinte & ") -> " & $filename)
+			_CheckFiles_LogWrite($log,_CheckFiles_Heure() & " - file not found : (" & $empreinte & ") -> " & $filename)
 			$NbFilesKO += 1
 
 			;Supprime l'entrée de la database

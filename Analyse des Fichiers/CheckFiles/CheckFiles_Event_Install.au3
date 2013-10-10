@@ -16,7 +16,7 @@
 ; ===============================================================================================================================
 Func _CheckFiles_Event_Install()
 	If Not(@Compiled) Then
-		MsgBox($MB_ICONHAND,"CheckFiles","Impossible d'installer le logiciel à partir du fichier AU3." & @CRLF & "Recommencer à partir de la version compilée !!")
+		MsgBox($MB_ICONHAND,$TITLE,"Impossible d'installer le logiciel à partir du fichier AU3." & @CRLF & "Recommencer à partir de la version compilée !!")
 		Return
 	EndIf
 

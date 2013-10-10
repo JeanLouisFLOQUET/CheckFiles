@@ -97,7 +97,7 @@ void sha1( const unsigned char *input, size_t ilen, unsigned char output[20] );
  *
  * \return         0 if successful, or POLARSSL_ERR_SHA1_FILE_IO_ERROR
  */
-int sha1_file( const char *path, unsigned char output[20] );
+int sha1_file( const wchar_t *path, unsigned char output[20] );
 
 /**
  * \brief          SHA-1 HMAC context setup

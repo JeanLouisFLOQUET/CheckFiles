@@ -333,7 +333,7 @@ void sha2( const unsigned char *input, size_t ilen,
 /*
  * output = SHA-256( file contents )
  */
-__declspec(dllexport) int sha224_file( const char *path, unsigned char output_txt[57] )
+__declspec(dllexport) int sha224_file( const wchar_t *path, unsigned char output_txt[57] )
 {
     FILE *f;
     size_t n;
@@ -341,7 +341,7 @@ __declspec(dllexport) int sha224_file( const char *path, unsigned char output_tx
     unsigned char buf[1024];
     unsigned char output_32[32];
 
-    if( ( f = fopen( path, "rb" ) ) == NULL )
+    if( ( f = _wfopen( path, L"rb" ) ) == NULL )
         return( POLARSSL_ERR_SHA2_FILE_IO_ERROR );
 
     sha2_starts( &ctx, 1 );
@@ -374,7 +374,7 @@ __declspec(dllexport) int sha224_file( const char *path, unsigned char output_tx
 /*
  * output = SHA-256( file contents )
  */
-__declspec(dllexport) int sha256_file( const char *path, unsigned char output_txt[65] )
+__declspec(dllexport) int sha256_file( const wchar_t *path, unsigned char output_txt[65] )
 {
     FILE *f;
     size_t n;
@@ -382,7 +382,7 @@ __declspec(dllexport) int sha256_file( const char *path, unsigned char output_tx
     unsigned char buf[1024];
     unsigned char output_32[32];
 
-    if( ( f = fopen( path, "rb" ) ) == NULL )
+    if( ( f = _wfopen( path, L"rb" ) ) == NULL )
         return( POLARSSL_ERR_SHA2_FILE_IO_ERROR );
 
     sha2_starts( &ctx, 0 );

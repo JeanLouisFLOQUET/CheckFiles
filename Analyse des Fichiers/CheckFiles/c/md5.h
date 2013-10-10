@@ -97,7 +97,7 @@ void md5( const unsigned char *input, size_t ilen, unsigned char output[16] );
  *
  * \return         0 if successful, or POLARSSL_ERR_MD5_FILE_IO_ERROR
  */
-int md5_file( const char *path, unsigned char output_txt[33] );
+int md5_file( const wchar_t *path, unsigned char output_txt[33] );
 
 /**
  * \brief          MD5 HMAC context setup

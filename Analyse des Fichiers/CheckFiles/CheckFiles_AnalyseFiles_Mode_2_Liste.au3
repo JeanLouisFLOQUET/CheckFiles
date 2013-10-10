@@ -27,8 +27,8 @@ Func _CheckFiles_AnalyseFiles_Mode_2_Liste($path)
 		If $req_stop Then Return
 		$filename = $path & "\" & _CheckFiles_Hash_FromIndex_GetFileName($i)
 		If FileExists($filename)=0 Then
-			FileWriteLine($log,_CheckFiles_Heure() & " - not found : " & $filename)
-			 _CheckFiles_Tip_Update("Non trouvé : " & $filename)
+			_CheckFiles_LogWrite($log,_CheckFiles_Heure() & " - not found : " & $filename)
+			_CheckFiles_Tip_Update("Non trouvé : " & $filename)
 			$NbFilesKO += 1
 		EndIf
 	Next

@@ -1,3 +1,7 @@
+#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Version=Beta
+#AutoIt3Wrapper_UseX64=n
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #include-once
 #include <CheckFiles_Global.au3>
 
@@ -54,14 +58,18 @@ Func _CheckFiles_AnalyseFiles_Mode_4_Ajout($path)
 			 _CheckFiles_Tip_Update("[dossier : " & $DirIndex & "/" & $TotDir[0] & "] [fichier : " & $i & "/" & $files[0] & "] : " & $filename)
 			$NbTotFiles += 1
 
-			$result = DllCall($dll_hnd,"int:cdecl",$dll_function,"str",$filename,"str","xxx")                                    ;Appelle la DLL pour calculer l'empreinte
+			$result = DllCall($dll_hnd,"int:cdecl",$dll_function,"wstr",$filename,"str","xxx")                                    ;Appelle la DLL pour calculer l'empreinte. "wstr" pour Unicode
 			$error  = @error
-			If $error Then
-				If $error=1 Then MsgBox($MB_ICONASTERISK,"CheckFiles","DllCall error code=1 (impossible d'utiliser la DLL => vérifier que EXE et DLL soit en x86 !!)")
-				If $error=2 Then MsgBox($MB_ICONASTERISK,"CheckFiles","DllCall error code=2 (type retourné inconnu)")
-				If $error=3 Then MsgBox($MB_ICONASTERISK,"CheckFiles","DllCall error code=3 (fonction non trouvée dans la DLL)")
-				If $error=4 Then MsgBox($MB_ICONASTERISK,"CheckFiles","DllCall error code=4 (mauvais nombre de paramètres)")
-				If $error=4 Then MsgBox($MB_ICONASTERISK,"CheckFiles","DllCall error code=5 (mauvais paramètre)")
+
+			If $result[0]=-116 Then
+				_CheckFiles_LogWrite($log,$filename & " : La fonction '" & $dll_function & "' de la DLL n'a pas pu ouvrir le fichier")
+				ContinueLoop                                                                                                     ;En cas d'erreur -> passe au fichier suivant
+			ElseIf $error Then
+				If $error=1 Then MsgBox($MB_ICONASTERISK,$TITLE,"DllCall error code=1 (impossible d'utiliser la DLL => vérifier que EXE et DLL soit en x86 !!)")
+				If $error=2 Then MsgBox($MB_ICONASTERISK,$TITLE,"DllCall error code=2 (type retourné inconnu)")
+				If $error=3 Then MsgBox($MB_ICONASTERISK,$TITLE,"DllCall error code=3 (fonction non trouvée dans la DLL)")
+				If $error=4 Then MsgBox($MB_ICONASTERISK,$TITLE,"DllCall error code=4 (mauvais nombre de paramètres)")
+				If $error=5 Then MsgBox($MB_ICONASTERISK,$TITLE,"DllCall error code=5 (mauvais paramètre)")
 				ContinueLoop                                                                                                     ;En cas d'erreur -> passe au fichier suivant
 			EndIf
 			$fp_comptd = $result[2]                                                                                              ;Extrait l'empreinte du tableau renvoyé

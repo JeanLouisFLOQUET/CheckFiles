@@ -97,7 +97,7 @@ void md4( const unsigned char *input, size_t ilen, unsigned char output[16] );
  *
  * \return         0 if successful, or POLARSSL_ERR_MD4_FILE_IO_ERROR
  */
-int md4_file( const char *path, unsigned char output_txt[33] );
+int md4_file( const wchar_t *path, unsigned char output_txt[33] );
 
 /**
  * \brief          MD4 HMAC context setup

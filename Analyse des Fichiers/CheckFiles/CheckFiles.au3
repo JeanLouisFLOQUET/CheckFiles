@@ -4,7 +4,7 @@
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_UseX64=n
 #AutoIt3Wrapper_Res_Description=JLF CheckFiles
-#AutoIt3Wrapper_Res_Fileversion=3.3.2.71
+#AutoIt3Wrapper_Res_Fileversion=4.1.1.72
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=p
 #AutoIt3Wrapper_Res_LegalCopyright=Jean-Louis FLOQUET
 #AutoIt3Wrapper_Res_Language=1036
@@ -26,6 +26,7 @@
 ;================================================================================
 ;Empreintes : MD2, MD4, MD5, SHA-1, SHA-224, SHA-256, SHA-384, SHA-512
 ;================================================================================
+; Version du projet PolarSSL : 1.2.7
 ; Le calcul des signatures est entièrement basé sur les codes sources du projet Polar SSL (https://polarssl.org/).
 ; La fonction 'md2_file'    a été adaptée pour retourner une chaîne hexadécimale 128 bits ( 32 caractères)
 ; La fonction 'md4_file'    a été adaptée pour retourner une chaîne hexadécimale 128 bits ( 32 caractères)
@@ -35,7 +36,11 @@
 ; La fonction 'sha256_file' a été adaptée pour retourner une chaîne hexadécimale 256 bits ( 64 caractères)
 ; La fonction 'sha384_file' a été adaptée pour retourner une chaîne hexadécimale 384 bits ( 96 caractères)
 ; La fonction 'sha512_file' a été adaptée pour retourner une chaîne hexadécimale 512 bits (128 caractères)
-; Version du projet PolarSSL : 1.2.7
+;
+; Ces codes sources ont ensuite été modifié pour accepter un nom de fichier au format Unicode :
+;   1) const char *path        => const wchar_t *path
+;   2) f = fopen( path, "rb" ) => f = _wfopen( path, L"rb" )
+;
 ; Les codes sources ont ensuite été compilés avec MinGW
 ; Script de compilation : _makefile_DLL_MinGW.bat
 ;
@@ -61,6 +66,9 @@
 ; Suivi de version              #
 ;################################
 ;   Rev.   |    Date    | Description
+;  4.01.01 | 2013/10/10 | 1) New : Support des noms de fichier au format Unicode (AutoIt + PolarSSL)
+;          |            |
+;-----------------------------------------------------------------------------------------------------------------------
 ;  3.03.02 | 2013/09/08 | 1) New : Vérification de l'empreinte de la DLL
 ;          |            | 2) Fix : Vérification que l'exécutable est bien 32bits (mode x64 non supporté)
 ;          |            |
@@ -93,16 +101,18 @@
 ;-----------------------------------------------------------------------------------------------------------------------
 ;#######################################################################################################################
 #include <CheckFiles_Global.au3>
+#include-once
 
 If StringInStr(@AutoItExe,"x64") Then
 	MsgBox($MB_ICONHAND,$GUI_TITLE,"Application non compatible x64 !")
 	Exit
 EndIf
 
-If _SHA1ForFile(@ScriptDir & "\CheckFiles_x86.dll")<>$DLL_SHA1 Then
+If _SHA1ForFile(@ScriptDir & "\CheckFiles_x86.dll")<>$DLL_SHA1 And @Compiled Then
 	MsgBox($MB_ICONEXCLAMATION,$GUI_TITLE,"Installation de la DLL...",10)
 	FileInstall("CheckFiles_x86.dll",@ScriptDir & "\CheckFiles_x86.dll",1) ;1=écrase le fichier
 EndIf
+
 
 $hash_list[0]=0
 

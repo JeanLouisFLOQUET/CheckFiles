@@ -331,7 +331,7 @@ void sha1( const unsigned char *input, size_t ilen, unsigned char output[20] )
 /*
  * output = SHA-1( file contents )
  */
-__declspec(dllexport) int sha1_file( const char *path, unsigned char output_txt[41] )
+__declspec(dllexport) int sha1_file( const wchar_t *path, unsigned char output_txt[41] )
 {
     FILE *f;
     size_t n;
@@ -339,7 +339,7 @@ __declspec(dllexport) int sha1_file( const char *path, unsigned char output_txt[
     unsigned char buf[1024];
     unsigned char output_20[20];
 
-    if( ( f = fopen( path, "rb" ) ) == NULL )
+    if( ( f = _wfopen( path, L"rb" ) ) == NULL )
         return( POLARSSL_ERR_SHA1_FILE_IO_ERROR );
 
     sha1_starts( &ctx );

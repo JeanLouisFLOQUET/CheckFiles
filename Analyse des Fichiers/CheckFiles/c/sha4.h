@@ -103,8 +103,8 @@ void sha4( const unsigned char *input, size_t ilen,
  *
  * \return         0 if successful, or POLARSSL_ERR_SHA4_FILE_IO_ERROR
  */
-int sha384_file( const char *path, unsigned char output_txt[97]  );
-int sha512_file( const char *path, unsigned char output_txt[129] );
+int sha384_file( const wchar_t *path, unsigned char output_txt[97]  );
+int sha512_file( const wchar_t *path, unsigned char output_txt[129] );
 
 /**
  * \brief          SHA-512 HMAC context setup

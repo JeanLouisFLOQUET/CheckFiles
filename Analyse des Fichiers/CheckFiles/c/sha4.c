@@ -331,7 +331,7 @@ void sha4( const unsigned char *input, size_t ilen,
 /*
  * output = SHA-384( file contents )
  */
-__declspec(dllexport) int sha384_file( const char *path, unsigned char output_txt[97] )
+__declspec(dllexport) int sha384_file( const wchar_t *path, unsigned char output_txt[97] )
 {
     FILE *f;
     size_t n;
@@ -339,7 +339,7 @@ __declspec(dllexport) int sha384_file( const char *path, unsigned char output_tx
     unsigned char buf[1024];
     unsigned char output_64[64];
 
-    if( ( f = fopen( path, "rb" ) ) == NULL )
+    if( ( f = _wfopen( path, L"rb" ) ) == NULL )
         return( POLARSSL_ERR_SHA4_FILE_IO_ERROR );
 
     sha4_starts( &ctx, 1 );
@@ -374,7 +374,7 @@ __declspec(dllexport) int sha384_file( const char *path, unsigned char output_tx
 /*
  * output = SHA-512( file contents )
  */
-__declspec(dllexport) int sha512_file( const char *path, unsigned char output_txt[129])
+__declspec(dllexport) int sha512_file( const wchar_t *path, unsigned char output_txt[129])
 {
     FILE *f;
     size_t n;
@@ -382,7 +382,7 @@ __declspec(dllexport) int sha512_file( const char *path, unsigned char output_tx
     unsigned char buf[1024];
     unsigned char output_64[64];
 
-    if( ( f = fopen( path, "rb" ) ) == NULL )
+    if( ( f = _wfopen( path, L"rb" ) ) == NULL )
         return( POLARSSL_ERR_SHA4_FILE_IO_ERROR );
 
     sha4_starts( &ctx, 0 );

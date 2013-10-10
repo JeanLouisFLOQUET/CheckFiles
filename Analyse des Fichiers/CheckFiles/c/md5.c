@@ -296,7 +296,7 @@ void md5( const unsigned char *input, size_t ilen, unsigned char output[16] )
 /*
  * output = MD5( file contents )
  */
-__declspec(dllexport) int md5_file( const char *path, unsigned char output_txt[33] )
+__declspec(dllexport) int md5_file( const wchar_t *path, unsigned char output_txt[33] )
 {
     FILE *f;
     size_t n;
@@ -305,7 +305,7 @@ __declspec(dllexport) int md5_file( const char *path, unsigned char output_txt[3
     unsigned char buf[1024];
     unsigned char output_16[16];
 
-    if( ( f = fopen( path, "rb" ) ) == NULL )
+	if( ( f = _wfopen( path, L"rb" ) ) == NULL )
         return( POLARSSL_ERR_MD5_FILE_IO_ERROR );
 
     md5_starts( &ctx );

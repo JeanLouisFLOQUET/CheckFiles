@@ -1,3 +1,7 @@
+#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Version=Beta
+#AutoIt3Wrapper_UseX64=n
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #include-once
 #include <CheckFiles_Global.au3>
 
@@ -35,7 +39,7 @@ Func _CheckFiles_AnalyseFiles_Mode_5_Verifie($path)
 
 		;Le fichier référencé n'existe pas
 		If FileExists($filename)=0 Then
-			FileWriteLine($log,_CheckFiles_Heure() & " - not found : " & $filename)
+			_CheckFiles_LogWrite($log,_CheckFiles_Heure() & " - not found : " & $filename)
 			$NbFilesKO += 1
 			ContinueLoop
 		EndIf
@@ -46,9 +50,9 @@ Func _CheckFiles_AnalyseFiles_Mode_5_Verifie($path)
 		$fp_saved = _CheckFiles_Hash_FromIndex_GetEmpreinte($i)
 
 		;Calcule l'empreinte du fichier actuel
-		$result = DllCall($dll_hnd,"int:cdecl",$dll_function,"str",$filename,"str","xxx") ;Appelle la DLL pour calculer l'empreinte
+		$result = DllCall($dll_hnd,"int:cdecl",$dll_function,"wstr",$filename,"str","xxx") ;Appelle la DLL pour calculer l'empreinte. "wstr" pour Unicode
 		If @error Then
-			FileWriteLine($log,_CheckFiles_Heure() & " - access KO : " & $filename)
+			_CheckFiles_LogWrite($log,_CheckFiles_Heure() & " - access KO : " & $filename)
 			$NbFilesKO += 1
 		Else
 			;Extrait l'empreinte du tableau renvoyé
@@ -56,8 +60,7 @@ Func _CheckFiles_AnalyseFiles_Mode_5_Verifie($path)
 
 			;Compare
 			If $fp_saved<>$fp_comptd Then
-				FileWriteLine($log,StringFormat("%s - wrong %s (exp=%s,got=%s) : %s",_CheckFiles_Heure(),$Empreinte,$fp_saved,$fp_comptd,$filename))
-;				FileWriteLine($log,_Heure() & " - wrong " & $Empreinte & " : " & $filename)
+				_CheckFiles_LogWrite($log,StringFormat("%s - wrong %s (exp=%s,got=%s) : %s",_CheckFiles_Heure(),$Empreinte,$fp_saved,$fp_comptd,$filename))
 				$NbFilesKO += 1
 			EndIf
 		EndIf

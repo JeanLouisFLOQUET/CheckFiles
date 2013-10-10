@@ -91,7 +91,7 @@ void md2( const unsigned char *input, size_t ilen, unsigned char output[16] );
  *
  * \return         0 if successful, or POLARSSL_ERR_MD2_FILE_IO_ERROR
  */
-int md2_file( const char *path, unsigned char output_txt[33] );
+int md2_file( const wchar_t *path, unsigned char output_txt[33] );
 
 /**
  * \brief          MD2 HMAC context setup

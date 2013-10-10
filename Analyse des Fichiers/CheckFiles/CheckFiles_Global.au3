@@ -1,3 +1,7 @@
+#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Version=beta
+#AutoIt3Wrapper_UseX64=n
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #include-once
 #include <Array.au3>
 #include <ButtonConstants.au3>
@@ -15,7 +19,7 @@ Opt("TrayMenuMode"   ,1)
 Opt("TrayOnEventMode",1)
 
 Global Const $REG_PATH              = "HKEY_CURRENT_USER\Software\JLF\CheckFiles"            ;Endroit de sauvegarde des paramètres
-Global Const $DLL_SHA1              = "33151E7761233BF284EC05C5325D0ECC81091049"             ;Code SHA1 de la DLL (calculé par les API de Windows, moins fiable que PolarSSL)
+Global Const $DLL_SHA1              = "01AA5FA8E14DB81B103683126B196AB3EE170DDE"             ;Code SHA1 de la DLL (calculé par les API de Windows, moins fiable que PolarSSL)
 ;============================================================================================;
 ;Fenêtre principale                                                                          ;
 ;============================================================================================;
@@ -139,3 +143,4 @@ Global       $timer
 #include <CheckFiles_TimeFormat.au3>
 #include <CheckFiles_Tip_Create.au3>
 #include <CheckFiles_Tip_Update.au3>
+#include <CheckFiles_LogWrite.au3>

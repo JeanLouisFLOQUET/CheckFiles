@@ -102,8 +102,8 @@ void sha2( const unsigned char *input, size_t ilen,
  *
  * \return         0 if successful, or POLARSSL_ERR_SHA2_FILE_IO_ERROR
  */
-int sha224_file( const char *path, unsigned char output_txt[57] );
-int sha256_file( const char *path, unsigned char output_txt[65] );
+int sha224_file( const wchar_t *path, unsigned char output_txt[57] );
+int sha256_file( const wchar_t *path, unsigned char output_txt[65] );
 
 /**
  * \brief          SHA-256 HMAC context setup

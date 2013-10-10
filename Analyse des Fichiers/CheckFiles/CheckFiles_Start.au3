@@ -1,3 +1,7 @@
+#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Version=Beta
+#AutoIt3Wrapper_UseX64=n
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #include-once
 #include <CheckFiles_Global.au3>
 
@@ -38,26 +42,43 @@ Func _CheckFiles_Start($path,$ModeAnalyse)
 	;Compte le nombre de dossiers et sous-dossiers
 	;-----------------------------------------------------------------------------------------------------------
 	Local $recursif = GUICtrlRead($hnd_recursif)
-	$TotDir = _FileListToArrayEx($MyPath,"*",2,$recursif) ;Compte seulement les dossiers (3ème arg) et sous-dossiers si récursif (4ème arg)
-	If @error Then
-		$TotDir = StringSplit($TotDir,"doesn't_matter",2)
-		$TotDir[0] = 0
-	Else
-		;Crée les chemins complets
-		For $i=1 To $TotDir[0]
-			$TotDir[$i] = $MyPath & "\" & $TotDir[$i]
-		Next
+	Switch $recursif
+		Case $GUI_CHECKED
+			$recursif = 1
+		Case $GUI_UNCHECKED
+			$recursif = 0
+		Case Else
+			MsgBox($MB_ICONHAND,$TITLE,"Impossible de déterminer l'état de la case 'Récursif'")
+			Exit
+	EndSwitch
 
-		;Elimine les dossiers exclus (les RegExp ont été corrigées pour exclure aussi les sous-dossiers si nécessaire)
-		For $i=$TotDir[0] To 1 Step -1
-			For $x=1 To $exc_arr[0]
-				If StringRegExp($TotDir[$i],"\A" & $exc_arr[$x] & "\z") Then
-					_ArrayDelete($TotDir,$i)
-					$TotDir[0] -= 1
-					ExitLoop
-				EndIf
+	;Compte seulement les dossiers (3ème arg) et sous-dossiers si récursif (4ème arg)
+	If $recursif=1 Then
+		$TotDir = _FileListToArrayEx($MyPath,"*",2,1)
+		If @error Then
+			$TotDir = StringSplit($TotDir,"doesn't_matter",2)
+			$TotDir[0] = 0
+		Else
+			;Crée les chemins complets
+			For $i=1 To $TotDir[0]
+				$TotDir[$i] = $MyPath & "\" & $TotDir[$i]
 			Next
-		Next
+
+			;Elimine les dossiers exclus (les RegExp ont été corrigées pour exclure aussi les sous-dossiers si nécessaire)
+			For $i=$TotDir[0] To 1 Step -1
+				For $x=1 To $exc_arr[0]
+					If StringRegExp($TotDir[$i],"\A" & $exc_arr[$x] & "\z") Then
+						_ArrayDelete($TotDir,$i)
+						$TotDir[0] -= 1
+						ExitLoop
+					EndIf
+				Next
+			Next
+		EndIf
+	Else
+		Local $temp[1]
+		$temp[0] = 0
+		$TotDir = $temp
 	EndIf
 
 	;Ajoute le chemin $MyPath au tableau (on a tous ses sous-dossiers, mais pas lui-même)
