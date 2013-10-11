@@ -127,7 +127,7 @@ Func _CheckFiles_GUI($path,$mode,$fp)
 	Opt("GUIOnEventMode", 1)
 	GUISetOnEvent($GUI_EVENT_CLOSE,"_CheckFiles_GUI_Close_Wo_Arg")
 
-	While $hnd_gui_main() <> 0
+	While $hnd_gui_main<>0
 		Sleep(10)
 	WEnd
 EndFunc

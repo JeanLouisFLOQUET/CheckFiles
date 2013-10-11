@@ -19,7 +19,7 @@ Opt("TrayMenuMode"   ,1)
 Opt("TrayOnEventMode",1)
 
 Global Const $REG_PATH              = "HKEY_CURRENT_USER\Software\JLF\CheckFiles"            ;Endroit de sauvegarde des paramètres
-Global Const $DLL_SHA1              = "01AA5FA8E14DB81B103683126B196AB3EE170DDE"             ;Code SHA1 de la DLL (calculé par les API de Windows, moins fiable que PolarSSL)
+Global Const $DLL_SHA1              = "3286DB14ACF66D53355B48F574905C3DD9F8D209"             ;Code SHA1 de la DLL (calculé par les API de Windows, moins fiable que PolarSSL)
 ;============================================================================================;
 ;Fenêtre principale                                                                          ;
 ;============================================================================================;

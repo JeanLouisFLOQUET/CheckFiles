@@ -91,7 +91,7 @@ Func _CheckFiles_Start($path,$ModeAnalyse)
 	;-----------------------------------------------------------------------------------------------------------
 	;Crée un fichier temporaire pour le journal
 	;-----------------------------------------------------------------------------------------------------------
-	$log = @TempDir & "\CheckFiles_LOG_" & @YEAR & @MON & @YDAY & "_" & @HOUR & @MIN & @SEC & ".txt"
+	$log = @TempDir & "\CheckFiles_LOG_" & @YEAR & @MON & @MDAY & "_" & @HOUR & @MIN & @SEC & ".txt"
 
 	;-----------------------------------------------------------------------------------------------------------
 	;Lance l'analyse

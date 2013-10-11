@@ -27,19 +27,22 @@ Func _CheckFiles_AnalyseFiles_Mode_5_Verifie($path)
 	_CheckFiles_Hash_Load($DB_FILENAME)
 
 	Local $fp_saved, $fp_comptd
-	Local $filename, $result
+	Local $fn_full, $fn_short
+	Local $result
 
 	;Parcourt la database
 	For $i=1 To $hash_list[0]
 		If $req_stop Then Return
 
 		;Récupère le nom du fichier référencé
-		$filename = $path & "\" & _CheckFiles_Hash_FromIndex_GetFileName($i)
-		_CheckFiles_Tip_Update("[dossier : " & $DirIndex & "/" & $TotDir[0] & "] [fichier : " & $i & "] : " & $filename)
+		$fn_short = _CheckFiles_Hash_FromIndex_GetFileName($i)
+		If $fn_short="" Then ContinueLoop
+		$fn_full = $path & "\" & $fn_short
+		_CheckFiles_Tip_Update("[dossier : " & $DirIndex & "/" & $TotDir[0] & "] [fichier : " & $i & "] : " & $fn_full)
 
 		;Le fichier référencé n'existe pas
-		If FileExists($filename)=0 Then
-			_CheckFiles_LogWrite($log,_CheckFiles_Heure() & " - not found : " & $filename)
+		If FileExists($fn_full)=0 Then
+			_CheckFiles_LogWrite($log,_CheckFiles_Heure() & " - not found : " & $fn_full)
 			$NbFilesKO += 1
 			ContinueLoop
 		EndIf
@@ -50,9 +53,9 @@ Func _CheckFiles_AnalyseFiles_Mode_5_Verifie($path)
 		$fp_saved = _CheckFiles_Hash_FromIndex_GetEmpreinte($i)
 
 		;Calcule l'empreinte du fichier actuel
-		$result = DllCall($dll_hnd,"int:cdecl",$dll_function,"wstr",$filename,"str","xxx") ;Appelle la DLL pour calculer l'empreinte. "wstr" pour Unicode
+		$result = DllCall($dll_hnd,"int:cdecl",$dll_function,"wstr",$fn_full,"str","xxx") ;Appelle la DLL pour calculer l'empreinte. "wstr" pour Unicode
 		If @error Then
-			_CheckFiles_LogWrite($log,_CheckFiles_Heure() & " - access KO : " & $filename)
+			_CheckFiles_LogWrite($log,_CheckFiles_Heure() & " - access KO : " & $fn_full)
 			$NbFilesKO += 1
 		Else
 			;Extrait l'empreinte du tableau renvoyé
@@ -60,7 +63,7 @@ Func _CheckFiles_AnalyseFiles_Mode_5_Verifie($path)
 
 			;Compare
 			If $fp_saved<>$fp_comptd Then
-				_CheckFiles_LogWrite($log,StringFormat("%s - wrong %s (exp=%s,got=%s) : %s",_CheckFiles_Heure(),$Empreinte,$fp_saved,$fp_comptd,$filename))
+				_CheckFiles_LogWrite($log,StringFormat("%s - wrong %s (exp=%s,got=%s) : %s",_CheckFiles_Heure(),$Empreinte,$fp_saved,$fp_comptd,$fn_full))
 				$NbFilesKO += 1
 			EndIf
 		EndIf

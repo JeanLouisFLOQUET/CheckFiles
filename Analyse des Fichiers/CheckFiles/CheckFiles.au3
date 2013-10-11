@@ -4,7 +4,7 @@
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_UseX64=n
 #AutoIt3Wrapper_Res_Description=JLF CheckFiles
-#AutoIt3Wrapper_Res_Fileversion=4.1.1.72
+#AutoIt3Wrapper_Res_Fileversion=4.1.2.74
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=p
 #AutoIt3Wrapper_Res_LegalCopyright=Jean-Louis FLOQUET
 #AutoIt3Wrapper_Res_Language=1036
@@ -66,7 +66,8 @@
 ; Suivi de version              #
 ;################################
 ;   Rev.   |    Date    | Description
-;  4.01.01 | 2013/10/10 | 1) New : Support des noms de fichier au format Unicode (AutoIt + PolarSSL)
+;  4.01.02 | 2013/10/10 | 1) New : Support des noms de fichier au format Unicode (AutoIt + PolarSSL)
+;          |            | 2) Enh : Gestion des bases de données
 ;          |            |
 ;-----------------------------------------------------------------------------------------------------------------------
 ;  3.03.02 | 2013/09/08 | 1) New : Vérification de l'empreinte de la DLL

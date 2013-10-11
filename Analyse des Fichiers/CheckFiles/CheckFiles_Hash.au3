@@ -17,7 +17,29 @@
 ; Example .......: No
 ; ===============================================================================================================================
 Func _CheckFiles_Hash_Write($db_file,$file,$value)
-	FileWriteLine($db_file,$value & " *" & $file)
+	Local $hnd, $char, $size
+
+	;Récupère la taille du fichier
+	$size = FileGetSize($db_file)
+
+	;Ouvre le fichier en lecture/écriture (append)
+	$hnd = FileOpen($db_file,$FO_APPEND)
+
+	;Se déplace au dernier caractère du fichier
+	FileSetPos($hnd,-1,$FILE_END)
+
+	;Vérifie que le fichier se termine bien par @CRLF
+	$char = FileRead($hnd,1)
+	$char = Asc($char)
+	If $char<>10 And $size>0 Then
+		FileWrite($hnd,@CRLF)
+	EndIf
+
+	;Ajoute l'entrée fournie en paramètres
+	FileWrite($hnd,$value & " *" & $file & @CRLF)
+
+	;Ferme le fichier
+	FileClose($hnd)
 EndFunc
 
 ; #FUNCTION# ====================================================================================================================
