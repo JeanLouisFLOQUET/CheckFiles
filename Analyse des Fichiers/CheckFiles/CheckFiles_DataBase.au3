@@ -23,10 +23,11 @@ Func _CheckFiles_Hash_Write($db_file,$file,$value)
 	$size = FileGetSize($db_file)
 
 	;Ouvre le fichier en lecture/écriture (append)
-	$hnd = FileOpen($db_file,$FO_APPEND)
+	_CheckFiles_Hash_ConvertUnicode($db_file)
+	$hnd = FileOpen($db_file,$FO_APPEND+$FO_UTF16_LE)
 
-	;Se déplace au dernier caractère du fichier
-	FileSetPos($hnd,-1,$FILE_END)
+	;Se déplace à l'avant-dernier caractère du fichier
+	FileSetPos($hnd,-2,$FILE_END)
 
 	;Vérifie que le fichier se termine bien par @CRLF
 	$char = FileRead($hnd,1)
@@ -74,7 +75,8 @@ EndFunc
 ; Example .......: No
 ; ===============================================================================================================================
 Func _CheckFiles_Hash_Save($db_file)
-	Local $hnd = FileOpen($db_file,2)
+	_CheckFiles_Hash_ConvertUnicode($db_file)
+	Local $hnd = FileOpen($db_file,$FO_OVERWRITE+$FO_UTF16_LE)
 	Local $txt = _ArrayToString($hash_list,@CRLF,1)
 	FileWrite($hnd,$txt)
 	FileClose($hnd)
@@ -134,4 +136,30 @@ EndFunc
 ; ===============================================================================================================================
 Func _CheckFiles_Hash_FromIndex_GetFileName($i)
 	Return StringMid($hash_list[$i],$FP_LENGTH_P3)
+EndFunc
+
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _CheckFiles_Hash_ConvertUnicode
+; Description ...:
+; Syntax ........: _CheckFiles_Hash_ConvertUnicode($file)
+; Parameters ....: $file                - Convertit un fichier au format Unicode
+; Return values .: None
+; Author ........: Your Name
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func _CheckFiles_Hash_ConvertUnicode($file)
+	Local $encoding = FileGetEncoding($file)
+	If $encoding<>32 Then
+		Local $hnd = FileOpen($file,$encoding)
+		Local $txt = FileRead($hnd)
+		FileClose($hnd)
+		FileOpen($file,$FO_OVERWRITE+$FO_UTF16_LE)
+		FileWrite($hnd,$txt)
+		FileClose($hnd)
+	EndIf
 EndFunc
