@@ -21,6 +21,7 @@
 Func _CheckFiles_AnalyseFiles_Mode_4_Ajout($path)
 	Local $files = _FileListToArrayEx($path,"*",1,0)
 	If @error<>0 Then Return ;erreur d'accès à ce dossier (chemin invalide, pas de fichier, pas le droit...)
+;	_ArrayDisplay($files)
 
 	;Détermine le fichier de la database
 	Local Const $DB_FILENAME = $path & "\" & $DB_LOCAL_NAME
