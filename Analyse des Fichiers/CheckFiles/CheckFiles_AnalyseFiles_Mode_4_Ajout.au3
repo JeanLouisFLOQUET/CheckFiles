@@ -32,6 +32,17 @@ Func _CheckFiles_AnalyseFiles_Mode_4_Ajout($path)
 	;Charge la database
 	_CheckFiles_Hash_Load($DB_FILENAME)
 
+	;Elimine les fichiers exclus
+	For $i=$files[0] To 1 Step -1
+		For $x=1 To $exc_arr[0]
+			If StringRegExp($files[$i],"\A" & $exc_arr[$x] & "\z") Then
+				_ArrayDelete($files,$i)
+				$files[0] -= 1
+				ExitLoop
+			EndIf
+		Next
+	Next
+
 	For $i=1 To $files[0]
 		If $req_stop Then Return
 

@@ -15,6 +15,11 @@
 ; Example .......: No
 ; ===============================================================================================================================
 Func _CheckFiles_Exclusions_Fix()
+	;Remplace le "*" par sa RegExp
+	For $i=1 To $exc_arr[0]
+		$exc_arr[$i] = StringReplace($exc_arr[$i],"*",".*")
+	Next
+
 	;Si une RegExp pointe sur un dossier, ajoute le morceau ad-hoc pour les sous-dossiers
 	For $i=1 To $exc_arr[0]
 		If StringInStr($exc_arr[$i],"\") Then
